@@ -14,7 +14,7 @@ The goals / steps of this project are the following:
 
 ---
 ## Project Overview
-Using a driving simulator that provides the cross track error (CTE) and velocity in mph, I designed and tuned a PID controller in C++ that controls the vehicle to be near the center of the lane when driving around the track. My controller controlled the steering adjustments on each iteration.
+Using a driving simulator that provides the cross track error (CTE) and velocity in mph, I designed and tuned a PID controller in C++ that centers the autonomous vehicle about the lane when driving around the track. My controller controlled the steering adjustments on each iteration.
 
 * `main.cpp` - communicates with the simulator and receives error, speed, and angle measurements. It calls PID functions to adjust the steering angle
 * `tools.cpp` - contains the PID object that can initialize, calculate errors, and return a PID controller output
