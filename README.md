@@ -20,9 +20,9 @@ Using a driving simulator that provides the cross track error (CTE) and velocity
 * `tools.cpp` - contains the PID object that can initialize, calculate errors, and return a PID controller output
 
 ### Tuning Parameters
-Several methods could've been used to tune the parameters, such as manual tuning, Zieglor-Nichols tuning, SGD, Twiddle. I used manual tuning for its ease of implementation (less up-front time but can be time consuming to obtain precise values. This helped me understand the effect of each PID parameter.
+Several methods could've been used to tune the parameters, such as manual tuning, Zieglor-Nichols tuning, SGD, Twiddle. I used manual tuning for its ease of implementation (less up-front time but can be time consuming to obtain precise values). This helped me understand the effect of each PID parameter.
 
-My parameters were:
+My final parameters were:
 | Kp | Ki | Kd |
 |---|---|---|
 | 0.16 | 0.00012 | 1.4 |
