@@ -37,7 +37,7 @@ int main() {
   PID pid;
   
   // Initialize pid variables for manual tuning
-  // Starting at [0.2, 0.0003, 3.0] and tuning for minimized squared error
+  // Starting at [0, 0, 0] and tuning for minimized squared error and smoothness
   pid.Init(0.16, 0.00012, 1.4);
   
   // Used to calculate total error after 1000 iteration of steering updates
