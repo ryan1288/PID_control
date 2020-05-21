@@ -33,13 +33,14 @@ string hasData(string s) {
 int main() {
   uWS::Hub h;
 
+  // Initialize PID controller object
   PID pid;
-  PID throttle_pid;
   
-  // Initialize pid variables after manual tuning - 95 0.00024
+  // Initialize pid variables for manual tuning
   // Starting at [0.2, 0.0003, 3.0] and tuning for minimized squared error
   pid.Init(0.16, 0.00012, 1.4);
   
+  // Used to calculate total error after 1000 iteration of steering updates
   double err = 0;
   int counts = 1000;
 
@@ -62,19 +63,21 @@ int main() {
           double speed = std::stod(j[1]["speed"].get<string>());
           double angle = std::stod(j[1]["steering_angle"].get<string>());
           double steer_value;
-          /**
-           * TODO: Calculate steering value here, remember the steering value is
-           *   [-1, 1].
-           * NOTE: Feel free to play around with the throttle and speed.
-           *   Maybe use another PID controller to control the speed!
-           */
+          
+          // Count for 1000 time steps to measure total squared error
           if (counts > 0)
           {
             err += pow(cte, 2);
             counts--;
           }
+          
+          // Update error values in the PID
           pid.UpdateError(cte);
+          
+          // Calculate the steering angle using the cross track error
           steer_value = pid.TotalError();
+          
+          // Constrain steering angles to be between [-1, 1]
           if (steer_value > 1)
             steer_value = 1.0;
           else if (steer_value < -1)
