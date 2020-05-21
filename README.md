@@ -22,24 +22,28 @@ Using a driving simulator that provides the cross track error (CTE) and velocity
 ### Tuning Parameters
 Several methods could've been used to tune the parameters, such as manual tuning, Zieglor-Nichols tuning, SGD, Twiddle. I used manual tuning for its ease of implementation (less up-front time but can be time consuming to obtain precise values. This helped me understand the effect of each PID parameter.
 
+My parameters were:
+| Kp | Ki | Kd |
+|---|---|---|
+| 0.16 | 0.00012 | 1.4 |
+
 #### P - Propotional
 Linear proportional error control. Directly decreases the response time and steady-state error but increases overshooting in oscillations.
 
 #### I - Integral
-Integral/sum of errors' influence on the steerign adjustment. Will greatly improve the response time and decrease the steady-state error to near 0 (removes the systematic bias), but increases overshoot and settling time.
+Integral/sum of errors' influence on the steering adjustment. Will greatly improve the response time and decrease the steady-state error to near 0 (removes the systematic bias), but increases overshoot and settling time.
 
 #### D - Derivative
 Rate of change of the cross track error. Introduces lag to the controller and lowers overshoot and settling time. Visually, this term improves the trajectory smoothness by reducing the response rate (introducing damping).
 
-The effects of each parameter can be summarized into a table:
+#### Summary
 | Parameter | Rise Time | Overshoot | Settling Time | Steady-state error |
 |---|---|---|---|---|
 | Kp | Decrease | Increase | Small change | Decrease |
 | Ki | Decrease | Increase | Increase | Decrease |
 | Kd | Small change | Decrease | Decrease | No change |
 
-I followed the approach below to manually tune my PID controller parameters:
-
+#### My Tuning Steps
 * Set Kp, Ki, and Kd to 0
 * Increase Kp until it provides a marginally stable oscillation
 * Increase Ki to remove the systematic bias error, which also removes the oscillations (lead)
@@ -49,6 +53,7 @@ I followed the approach below to manually tune my PID controller parameters:
 An example of the output is shown below:
 
 ![][image1]
+
 ---
 ## Try it yourself!
 
