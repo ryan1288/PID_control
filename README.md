@@ -3,7 +3,7 @@
 The goals / steps of this project are the following:
 * Implement PID equations
 * Iterate to fine-tune parameters through testing
-* Develop an understanding of one controller type
+* Develop an understanding of the PID controller
 * Use the simulator to test PID parameters
 * Summarize the results with a written report
 
@@ -22,28 +22,28 @@ Using a driving simulator that provides the cross track error (CTE) and velocity
 ### Tuning Parameters
 Several methods could've been used to tune the parameters, such as manual tuning, Zieglor-Nichols tuning, SGD, Twiddle. I used manual tuning for its ease of implementation (less up-front time but can be time consuming to obtain precise values. This helped me understand the effect of each PID parameter.
 
-The influence can be summarized into a table:
+#### P - Propotional
+Linear proportional error control. Directly decreases the response time and steady-state error but increases overshooting in oscillations.
+
+#### I - Integral
+Integral/sum of errors' influence on the steerign adjustment. Will greatly improve the response time and decrease the steady-state error to near 0 (removes the systematic bias), but increases overshoot and settling time.
+
+#### D - Derivative
+Rate of change of the cross track error. Introduces lag to the controller and lowers overshoot and settling time. Visually, this term improves the trajectory smoothness by reducing the response rate (introducing damping).
+
+The effects of each parameter can be summarized into a table:
 | Parameter | Rise Time | Overshoot | Settling Time | Steady-state error |
 |---|---|---|---|---|
 | Kp | Decrease | Increase | Small change | Decrease |
 | Ki | Decrease | Increase | Increase | Decrease |
 | Kd | Small change | Decrease | Decrease | No change |
 
-#### P - Propotional
-This parameter controls the error proportionally. Increasing the proportional gain has the effect of proportionally increasing the control signal for the same level of error. Setting only P control is agressive and has oscillations.
-
-#### I - Integral
-This parameter controls the accumulating error. Addition of this term reduces the steady state error. If there is a bias in the system, the integrator builds and builds, thereby increasing the control signal and driving the error down. 
-
-#### D - Derivative
-This parameter controls the rate of change of error. Addition of this term reduces the oscillary effect in  the system. With derivative control, the control signal can become large if the error begins sloping upward, even while the magnitude of the error is still relatively small. This anticipation tends to add damping to the system, thereby decreasing overshoot.
-
 I followed the approach below to manually tune my PID controller parameters:
 
 * Set Kp, Ki, and Kd to 0
 * Increase Kp until it provides a marginally stable oscillation
 * Increase Ki to remove the systematic bias error, which also removes the oscillations (lead)
-* Increase Kd until the overshoot at the start is minimized and to improve the trajectory smoothness(lag)
+* Increase Kd until the overshoot at the start is minimized, improving the trajectory smoothness (lag)
 * Test around the Kp, Ki, Kd parameters until the squared error is minimized and the motion is visually smooth
 
 An example of the output is shown below:
